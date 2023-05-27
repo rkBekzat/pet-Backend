@@ -2,12 +2,16 @@ package port
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"pet/internal/handler"
 	"pet/internal/service"
 )
 
-func NewServer(app service.Service) *http.Server {
+type Server struct {
+	port string
+	app  *gin.Engine
+}
+
+func NewServer(port string, app *service.Service) Server {
 	router := gin.Default()
 
 	auth := router.Group("/auth")
@@ -16,6 +20,13 @@ func NewServer(app service.Service) *http.Server {
 		auth.POST("/sign-in", handler.SignIn(app))
 	}
 
-	s := &http.Server{Addr: "8080", Handler: router}
+	s := Server{
+		port: port,
+		app:  router,
+	}
 	return s
+}
+
+func (s *Server) Listen() error {
+	return s.app.Run("localhost:" + s.port)
 }

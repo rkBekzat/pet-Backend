@@ -1,0 +1,13 @@
+DROP TABLE Articles;
+
+DROP TABLE Owner;
+
+DROP TABLE Address;
+
+DROP TABLE Pet;
+
+DROP TABLE Found;
+
+DROP TABLE Lost;
+
+DROP TABLE Users
