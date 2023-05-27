@@ -1,0 +1,118 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Pet project",
+    "version": "1.0"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "getPets",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PetsDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "createOrder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePetsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PetsDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PetsDto": {
+        "required" : [
+          "name",
+          "age",
+          "sex",
+          "info"
+        ],
+        "type":"object",
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "age" : {
+            "type" : "number"
+          },
+          "sex" : {
+            "type" : "string",
+            "enum" : [
+              "male",
+              "female"
+            ]
+          }
+        }
+      },
+      "CreatePetsRequest" : {
+        "type" : "object"
+      },
+      "BadRequestResponse": {
+        "type": "object"
+      }
+
+    }
+  }
+}
