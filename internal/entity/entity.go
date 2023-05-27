@@ -24,6 +24,7 @@ type Owner struct {
 }
 
 type User struct {
+	Id       int    `json:"id" db:"id"`
 	Name     string `json:"-"`
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`

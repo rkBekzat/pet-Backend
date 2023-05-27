@@ -22,7 +22,7 @@ type AuthService struct {
 
 type tokenClaims struct {
 	jwt.StandardClaims
-	UserId int `json:"user_id"`
+	UserId int `json:"id"`
 }
 
 func NewAuthService(repo repository.Authorization) *AuthService {
@@ -37,16 +37,17 @@ func (auth *AuthService) CreateUser(user entity.User) (int, error) {
 }
 
 func (auth *AuthService) GenerateToken(username, password string) (string, error) {
-	_, err := auth.repo.GetUser(username, generatePasswordHash(password))
+	user, err := auth.repo.GetUser(username, generatePasswordHash(password))
+	fmt.Println("BEFORE ENTER: ", user.Id)
 	if err != nil {
 		return "", err
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodES256, &tokenClaims{
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &tokenClaims{
 		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(tokenTTL).Unix(),
 			IssuedAt:  time.Now().Unix(),
 		},
-		0,
+		user.Id,
 	})
 	return token.SignedString([]byte(signingKey))
 }

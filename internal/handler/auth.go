@@ -34,8 +34,10 @@ func SignIn(app *service.Service) gin.HandlerFunc {
 		if err := ctx.BindJSON(&input); err != nil {
 			return
 		}
+		fmt.Println(input)
 		token, err := app.Auth.GenerateToken(input.Username, input.Password)
 		if err != nil {
+			fmt.Println(err.Error())
 			log.Println(err.Error())
 			return
 		}
