@@ -1,15 +1,20 @@
 package entity
 
-type pet struct {
+type Pet struct {
 }
 
-type user struct {
+type Owner struct {
 	id   int64
 	name string
-	pets []pet
+	pets []Pet
 }
 
-type doctor struct {
+type User struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+type Doctor struct {
 	id   int64
 	name string
 }
