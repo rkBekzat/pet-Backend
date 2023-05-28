@@ -28,7 +28,7 @@ func (p *PetService) Update(pet entity.Pet) error {
 }
 
 func (p *PetService) Delete(id int) error {
-	return nil
+	return p.repo.Delete(id)
 }
 
 func (p *PetService) GetById(id int) (*entity.Pet, error) {

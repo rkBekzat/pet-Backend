@@ -59,7 +59,19 @@ func GetById(app *service.Service) gin.HandlerFunc {
 
 func DeletePet(app *service.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-
+		s := ctx.Param("id")
+		id, err := strconv.Atoi(s)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, err.Error())
+			return
+		}
+		fmt.Println("ID: ", id)
+		err = app.Pet.Delete(id)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, err.Error())
+			return
+		}
+		ctx.JSON(http.StatusOK, "ok")
 	}
 }
 
