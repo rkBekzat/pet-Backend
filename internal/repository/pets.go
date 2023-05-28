@@ -40,9 +40,19 @@ func (p *PetPostgres) Delete(id int) error {
 
 func (p *PetPostgres) GetById(id int) (*entity.Pet, error) {
 	var res *entity.Pet = new(entity.Pet)
-	query := "SELECT * FROM Pet WHERE AND id=$2"
+	query := "SELECT * FROM pet WHERE id=$1"
 	row := p.db.QueryRow(query, id)
-	if err := row.Scan(&res); err != nil {
+	if err := row.Scan(
+		&res.Id,
+		&res.Username,
+		&res.Species,
+		&res.Breed,
+		&res.Name,
+		&res.DateOfBirth,
+		&res.Color,
+		&res.Sex,
+		&res.Tattoo,
+		&res.IssuedOrganization); err != nil {
 		return nil, err
 	}
 	return res, nil
