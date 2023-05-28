@@ -17,12 +17,19 @@ func NewPetPostgres(db *sqlx.DB) *PetPostgres {
 
 func (p *PetPostgres) Create(pet entity.Pet) error {
 	var id int
-	query := "INSERT INTO pet (username, name) VALUES ($1, $2) RETURNING id"
+	query := "INSERT INTO pet (username, species, breed,  name, date_of_birth, color, sex, tattoo, issued_organization) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id"
 
 	row := p.db.QueryRow(
 		query,
 		pet.Username,
+		pet.Species,
+		pet.Breed,
 		pet.Name,
+		pet.DateOfBirth,
+		pet.Color,
+		pet.Sex,
+		pet.Tattoo,
+		pet.IssuedOrganization,
 	)
 	if err := row.Scan(&id); err != nil {
 		return err
@@ -69,5 +76,28 @@ func (p *PetPostgres) GetById(id int) (*entity.Pet, error) {
 }
 
 func (p *PetPostgres) GetAll() ([]*entity.Pet, error) {
-	return nil, nil
+	query := "SELECT * FROM pet"
+	row, err := p.db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	var result []*entity.Pet
+	for row.Next() {
+		var res *entity.Pet = new(entity.Pet)
+		if err = row.Scan(
+			&res.Id,
+			&res.Username,
+			&res.Species,
+			&res.Breed,
+			&res.Name,
+			&res.DateOfBirth,
+			&res.Color,
+			&res.Sex,
+			&res.Tattoo,
+			&res.IssuedOrganization); err != nil {
+			return nil, err
+		}
+		result = append(result, res)
+	}
+	return result, nil
 }

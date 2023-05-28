@@ -22,7 +22,7 @@ func AddPet(app *service.Service) gin.HandlerFunc {
 			ctx.JSON(http.StatusBadRequest, err.Error())
 			return
 		}
-		fmt.Println(pet)
+		fmt.Println(pet.Username, pet.Sex, pet.IssuedOrganization, pet.IssuedOrganization)
 		err = app.Pet.Create(pet)
 		if err != nil {
 			ctx.JSON(http.StatusForbidden, err.Error())
@@ -34,7 +34,12 @@ func AddPet(app *service.Service) gin.HandlerFunc {
 
 func GetAll(app *service.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-
+		all, err := app.Pet.GetAll()
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, err.Error())
+			return
+		}
+		ctx.JSON(http.StatusOK, all)
 	}
 }
 

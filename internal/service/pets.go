@@ -36,5 +36,5 @@ func (p *PetService) GetById(id int) (*entity.Pet, error) {
 }
 
 func (p *PetService) GetAll() ([]*entity.Pet, error) {
-	return nil, nil
+	return p.repo.GetAll()
 }
