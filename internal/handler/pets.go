@@ -65,6 +65,24 @@ func DeletePet(app *service.Service) gin.HandlerFunc {
 
 func UpdatePet(app *service.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-
+		s := ctx.Param("id")
+		id, err := strconv.Atoi(s)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, err.Error())
+			return
+		}
+		fmt.Println("ID: ", id)
+		var pet entity.Pet
+		err = ctx.BindJSON(&pet)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, err.Error())
+			return
+		}
+		err = app.Pet.Update(pet)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, err.Error())
+			return
+		}
+		ctx.JSON(http.StatusOK, "ok")
 	}
 }

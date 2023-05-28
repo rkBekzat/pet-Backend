@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"github.com/jmoiron/sqlx"
 	"pet/internal/entity"
 )
@@ -31,6 +32,12 @@ func (p *PetPostgres) Create(pet entity.Pet) error {
 }
 
 func (p *PetPostgres) Update(pet entity.Pet) error {
+	query := "UPDATE pet SET name=$1 WHERE username=$2"
+	exec, err := p.db.Exec(query, pet.Name, pet.Username)
+	if err != nil {
+		return err
+	}
+	fmt.Println(exec)
 	return nil
 }
 
