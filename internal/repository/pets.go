@@ -15,9 +15,9 @@ func NewPetPostgres(db *sqlx.DB) *PetPostgres {
 	}
 }
 
-func (p *PetPostgres) Create(pet *entity.Pet) error {
+func (p *PetPostgres) Create(pet entity.Pet) error {
 	var id int
-	query := "INSERT INTO Pet (username, name) VALUES ($1, $2) RETURNING id"
+	query := "INSERT INTO pet (username, name) VALUES ($1, $2) RETURNING id"
 
 	row := p.db.QueryRow(
 		query,
@@ -30,7 +30,7 @@ func (p *PetPostgres) Create(pet *entity.Pet) error {
 	return nil
 }
 
-func (p *PetPostgres) Update(pet *entity.Pet) error {
+func (p *PetPostgres) Update(pet entity.Pet) error {
 	return nil
 }
 

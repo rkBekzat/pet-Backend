@@ -15,7 +15,7 @@ func NewPetService(repo repository.Pets) *PetService {
 	}
 }
 
-func (p *PetService) Create(pet *entity.Pet) error {
+func (p *PetService) Create(pet entity.Pet) error {
 	err := p.repo.Create(pet)
 	if err != nil {
 		return err
@@ -23,7 +23,7 @@ func (p *PetService) Create(pet *entity.Pet) error {
 	return nil
 }
 
-func (p *PetService) Update(pet *entity.Pet) error {
+func (p *PetService) Update(pet entity.Pet) error {
 	return nil
 }
 

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"pet/internal/entity"
@@ -10,12 +11,18 @@ import (
 
 func AddPet(app *service.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var pet *entity.Pet = new(entity.Pet)
-		err := ctx.BindJSON(pet)
+		_, err := getUserId(ctx)
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, err.Error())
+			return
+		}
+		var pet entity.Pet
+		err = ctx.BindJSON(&pet)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, err.Error())
 			return
 		}
+		fmt.Println(pet)
 		err = app.Pet.Create(pet)
 		if err != nil {
 			ctx.JSON(http.StatusForbidden, err.Error())
