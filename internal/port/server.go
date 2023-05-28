@@ -30,6 +30,14 @@ func NewServer(port string, app *service.Service) Server {
 			pets.GET("/", handler.GetAll(app))
 			pets.DELETE("/:id", handler.DeletePet(app))
 		}
+		article := api.Group("/article")
+		{
+			article.POST("/")
+			article.POST("/:id")
+			article.GET("/")
+			article.GET("/:id")
+
+		}
 	}
 
 	s := Server{

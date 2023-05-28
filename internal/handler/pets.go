@@ -55,7 +55,11 @@ func GetAll(app *service.Service) gin.HandlerFunc {
 			ctx.JSON(http.StatusBadRequest, err.Error())
 			return
 		}
-		ctx.JSON(http.StatusOK, all)
+		ctx.JSON(http.StatusOK, struct {
+			Data []*entity.Pet `json:"data"`
+		}{
+			Data: all,
+		})
 	}
 }
 
@@ -67,14 +71,16 @@ func GetById(app *service.Service) gin.HandlerFunc {
 			ctx.JSON(http.StatusBadRequest, err.Error())
 			return
 		}
-		fmt.Println("ID: ", id)
 		myPet, err := app.Pet.GetById(id)
-		fmt.Println("PET:? ", myPet)
 		if err != nil {
 			fmt.Println(err.Error())
 			return
 		}
-		ctx.JSON(http.StatusOK, myPet)
+		ctx.JSON(http.StatusOK, struct {
+			Data *entity.Pet `json:"data"`
+		}{
+			Data: myPet,
+		})
 	}
 }
 
