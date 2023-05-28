@@ -22,8 +22,8 @@ type Authorization interface {
 }
 
 type Pets interface {
-	Create(pet entity.Pet) error
-	Update(pet entity.Pet) error
+	Create(pet *entity.Pet) error
+	Update(pet *entity.Pet) error
 	Delete(id int) error
 	GetById(id int) (*entity.Pet, error)
 	GetAll() ([]*entity.Pet, error)

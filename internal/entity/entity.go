@@ -1,26 +1,26 @@
 package entity
 
 type Pet struct {
-	id                 int    `json:"id" `
-	username           string `json:"username"`
-	species            string `json:"species"`
-	breed              string `json:"breed"`
-	name               string `json:"name"`
-	dateOfBirth        string `json:"dateOfBirth"`
-	color              string `json:"color"`
-	sex                bool   `json:"sex"`
-	tattoo             string `json:"tattoo"`
-	issuedOrganization string `json:"issued_organization"`
+	Id                 int    `json:"id" `
+	Username           string `json:"username"`
+	Species            string `json:"species"`
+	Breed              string `json:"breed"`
+	Name               string `json:"name"`
+	DateOfBirth        string `json:"dateOfBirth"`
+	Color              string `json:"color"`
+	Sex                bool   `json:"sex"`
+	Tattoo             string `json:"tattoo"`
+	IssuedOrganization string `json:"issued_organization"`
 }
 
 type Owner struct {
-	name        string `json:"name"`
-	addressId   int    `json:"address_id"`
-	surname     string `json:"surname"`
-	email       string `json:"email"`
-	phoneNumber string `json:"phone_number"`
-	username    string `json:"username"`
-	pets        []Pet  `json:"-"`
+	Name        string `json:"name"`
+	AddressId   int    `json:"address_id"`
+	Surname     string `json:"surname"`
+	Email       string `json:"email"`
+	PhoneNumber string `json:"phone_number"`
+	Username    string `json:"username"`
+	Pets        []Pet  `json:"-"`
 }
 
 type User struct {
@@ -31,6 +31,6 @@ type User struct {
 }
 
 type Doctor struct {
-	id   int64
-	name string
+	Id   int64
+	Name string
 }
