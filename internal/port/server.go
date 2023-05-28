@@ -20,6 +20,18 @@ func NewServer(port string, app *service.Service) Server {
 		auth.POST("/sign-in", handler.SignIn(app))
 	}
 
+	api := router.Group("/api", handler.UserIdentity(app))
+	{
+		pets := api.Group("/pets")
+		{
+			pets.POST("/", handler.AddPet(app))
+			pets.POST("/:id", handler.UpdatePet(app))
+			pets.GET("/:id", handler.GetById(app))
+			pets.GET("/", handler.GetAll(app))
+			pets.DELETE("/:id", handler.DeletePet(app))
+		}
+	}
+
 	s := Server{
 		port: port,
 		app:  router,

@@ -11,12 +11,22 @@ type Authorization interface {
 	ParseToken(token string) (int, error)
 }
 
+type PetAppInterface interface {
+	Create(pet entity.Pet) error
+	Update(pet entity.Pet) error
+	Delete(id int) error
+	GetById(id int) (*entity.Pet, error)
+	GetAll() ([]*entity.Pet, error)
+}
+
 type Service struct {
 	Auth Authorization
+	Pet  PetAppInterface
 }
 
 func NewService(repo *repository.Repository) *Service {
 	return &Service{
 		Auth: NewAuthService(repo.Authorization),
+		Pet:  NewPetService(repo.Pets),
 	}
 }
