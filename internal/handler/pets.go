@@ -90,11 +90,13 @@ func UpdatePet(app *service.Service) gin.HandlerFunc {
 		}
 		fmt.Println("ID: ", id)
 		var pet entity.Pet
+		pet.Id = id
 		err = ctx.BindJSON(&pet)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, err.Error())
 			return
 		}
+		fmt.Println("UPDATE: ", pet)
 		err = app.Pet.Update(pet)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, err.Error())

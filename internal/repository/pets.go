@@ -38,8 +38,8 @@ func (p *PetPostgres) Create(pet entity.Pet) error {
 }
 
 func (p *PetPostgres) Update(pet entity.Pet) error {
-	query := "UPDATE pet SET name=$1 WHERE username=$2"
-	_, err := p.db.Exec(query, pet.Name, pet.Username)
+	query := "UPDATE pet SET name=$1, species=$3, breed=$4, date_of_birth=$5, color=$6, sex=$7, tattoo=$8, issued_organization=$9  WHERE id=$2"
+	_, err := p.db.Exec(query, pet.Name, pet.Id, pet.Species, pet.Breed, pet.DateOfBirth, pet.Color, pet.Sex, pet.Tattoo, pet.IssuedOrganization)
 	if err != nil {
 		return err
 	}
