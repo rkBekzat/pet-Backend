@@ -32,3 +32,13 @@ func (auth *AuthPostgres) GetUser(username, password string) (entity.User, error
 
 	return user, err
 }
+
+func (auth *AuthPostgres) GetNameById(id int) (string, error) {
+	var user string
+	query := "SELECT username FROM users WHERE id=$1"
+	row := auth.db.QueryRow(query, id)
+	if err := row.Scan(&user); err != nil {
+		return "", err
+	}
+	return user, nil
+}

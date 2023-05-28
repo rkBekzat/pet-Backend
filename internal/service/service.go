@@ -9,6 +9,7 @@ type Authorization interface {
 	CreateUser(user entity.User) (int, error)
 	GenerateToken(username, password string) (string, error)
 	ParseToken(token string) (int, error)
+	GetName(id int) (string, error)
 }
 
 type PetAppInterface interface {
@@ -16,7 +17,7 @@ type PetAppInterface interface {
 	Update(pet entity.Pet) error
 	Delete(id int) error
 	GetById(id int) (*entity.Pet, error)
-	GetAll() ([]*entity.Pet, error)
+	GetAll(username string) ([]*entity.Pet, error)
 }
 
 type Service struct {

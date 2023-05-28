@@ -35,6 +35,6 @@ func (p *PetService) GetById(id int) (*entity.Pet, error) {
 	return p.repo.GetById(id)
 }
 
-func (p *PetService) GetAll() ([]*entity.Pet, error) {
-	return p.repo.GetAll()
+func (p *PetService) GetAll(username string) ([]*entity.Pet, error) {
+	return p.repo.GetAll(username)
 }

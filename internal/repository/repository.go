@@ -20,6 +20,7 @@ func NewRepository(db *sqlx.DB) *Repository {
 type Authorization interface {
 	CreateUser(user entity.User) (int, error)
 	GetUser(username, password string) (entity.User, error)
+	GetNameById(id int) (string, error)
 }
 
 type Pets interface {
@@ -27,5 +28,5 @@ type Pets interface {
 	Update(pet entity.Pet) error
 	Delete(id int) error
 	GetById(id int) (*entity.Pet, error)
-	GetAll() ([]*entity.Pet, error)
+	GetAll(username string) ([]*entity.Pet, error)
 }

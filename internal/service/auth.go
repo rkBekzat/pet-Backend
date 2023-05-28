@@ -73,6 +73,10 @@ func (auth *AuthService) ParseToken(accessToken string) (int, error) {
 	return claims.UserId, nil
 }
 
+func (auth *AuthService) GetName(id int) (string, error) {
+	return auth.repo.GetNameById(id)
+}
+
 func generatePasswordHash(password string) string {
 	hash := sha1.New()
 	hash.Write([]byte(password))

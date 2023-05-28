@@ -11,9 +11,14 @@ import (
 
 func AddPet(app *service.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		_, err := getUserId(ctx)
+		id, err := getUserId(ctx)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, err.Error())
+			return
+		}
+		username, err := app.Auth.GetName(id)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, err.Error())
 			return
 		}
 		var pet entity.Pet
@@ -22,6 +27,7 @@ func AddPet(app *service.Service) gin.HandlerFunc {
 			ctx.JSON(http.StatusBadRequest, err.Error())
 			return
 		}
+		pet.Username = &username
 		fmt.Println(pet.Username, pet.Sex, pet.IssuedOrganization, pet.IssuedOrganization)
 		err = app.Pet.Create(pet)
 		if err != nil {
@@ -34,7 +40,17 @@ func AddPet(app *service.Service) gin.HandlerFunc {
 
 func GetAll(app *service.Service) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		all, err := app.Pet.GetAll()
+		id, err := getUserId(ctx)
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, err.Error())
+			return
+		}
+		username, err := app.Auth.GetName(id)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, err.Error())
+			return
+		}
+		all, err := app.Pet.GetAll(username)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, err.Error())
 			return

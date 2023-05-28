@@ -75,9 +75,9 @@ func (p *PetPostgres) GetById(id int) (*entity.Pet, error) {
 	return res, nil
 }
 
-func (p *PetPostgres) GetAll() ([]*entity.Pet, error) {
-	query := "SELECT * FROM pet"
-	row, err := p.db.Query(query)
+func (p *PetPostgres) GetAll(username string) ([]*entity.Pet, error) {
+	query := "SELECT * FROM pet WHERE username=$1"
+	row, err := p.db.Query(query, username)
 	if err != nil {
 		return nil, err
 	}
