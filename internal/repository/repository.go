@@ -2,12 +2,14 @@ package repository
 
 import (
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"pet/internal/entity"
 )
 
 type Repository struct {
 	Authorization
 	Pets
+	Owner
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
@@ -29,4 +31,12 @@ type Pets interface {
 	Delete(id int) error
 	GetById(id int) (*entity.Pet, error)
 	GetAll(username string) ([]*entity.Pet, error)
+}
+
+type Owner interface {
+	AddAddress(address entity.Address) (*entity.Address, error)
+	SetAddress(address entity.Address) (*entity.Address, error)
+	HasAddress(add entity.Address) bool
+	Found()
+	Lost()
 }

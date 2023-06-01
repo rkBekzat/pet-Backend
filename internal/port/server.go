@@ -36,8 +36,11 @@ func NewServer(port string, app *service.Service) Server {
 			article.POST("/:id")
 			article.GET("/")
 			article.GET("/:id")
-
 		}
+
+		api.POST("/", handler.AddAddress(app))
+		api.POST("/update", handler.SetAddress(app))
+
 	}
 
 	s := Server{
