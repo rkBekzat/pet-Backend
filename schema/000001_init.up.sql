@@ -53,6 +53,12 @@ CREATE TABLE Pet_shop(
                              REFERENCES Address(address_id)
 );
 
+CREATE TABLE users(
+    username VARCHAR(100),
+    name VARCHAR(100),
+    password VARCHAR(100),
+)
+
 CREATE TABLE Owner(
                       user_id SERIAL PRIMARY KEY ,
                       username VARCHAR(100),
