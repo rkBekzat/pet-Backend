@@ -54,10 +54,11 @@ CREATE TABLE Pet_shop(
 );
 
 CREATE TABLE users(
-    username VARCHAR(100),
-    name VARCHAR(100),
-    password VARCHAR(100),
-)
+    id SERIAL NOT NULL UNIQUE,
+    username VARCHAR(100) PRIMARY KEY UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    password_hash VARCHAR(100) NOT NULL
+);
 
 CREATE TABLE Owner(
                       user_id SERIAL PRIMARY KEY ,
