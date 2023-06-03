@@ -5,7 +5,93 @@
     "version": "1.0"
   },
   "paths": {
-    "/pets": {
+    "/auth/sign-up" : {
+      "post" : {
+        "tags": [
+          "User"
+        ],
+        "operationId": "SignUP",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IDDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/sign-in" : {
+      "post" : {
+        "tags": [
+          "User"
+        ],
+        "operationId": "SignIn",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TokenResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/pets": {
       "get": {
         "tags": [
           "User"
@@ -46,7 +132,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreatePetsRequest"
+                "$ref": "#/components/schemas/RequestPet"
               }
             }
           },
@@ -78,16 +164,64 @@
           }
         }
       }
+    },
+    "/api/pets/{id}" : {
+        "get" : {
+          "tags": ["User"],
+          "requestBody": {
+
+          },
+          "responses": {
+
+          }
+        },
+      "post" : {
+        "tags": ["User"],
+          "requestBody": {
+
+          },
+        "responses": {
+
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "requestBody": {
+
+        },
+        "responses": {
+
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "PetsDto": {
+      "IDDto" : {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id" : {
+            "type": "number"
+          }
+        }
+      },
+
+      "RequestPet" : {
         "required" : [
           "name",
           "age",
+          "species",
+          "breed",
+          "color",
+          "date_of_birth",
           "sex",
-          "info"
+          "tattoo",
+          "issued_organization",
+          "photo_id",
+          "user_id"
         ],
         "type":"object",
         "properties" : {
@@ -97,12 +231,141 @@
           "age" : {
             "type" : "number"
           },
+          "species" : {
+            "type" : "string"
+          },
+          "breed" : {
+            "type": "string"
+          },
+          "color" : {
+            "type": "string"
+          },
+          "date_of_birth" : {
+            "type" : "string"
+          },
           "sex" : {
             "type" : "string",
             "enum" : [
               "male",
               "female"
             ]
+          },
+          "tattoo" : {
+            "type": "string"
+          },
+          "issued_orgonization" : {
+            "type" : "string"
+          },
+          "photo_id" : {
+            "type" : "number"
+          },
+          "user_id" : {
+            "type": "number"
+          }
+        }
+      },
+
+      "PetsDto": {
+        "required" : [
+          "pet_id",
+          "name",
+          "age",
+          "species",
+          "breed",
+          "color",
+          "date_of_birth",
+          "sex",
+          "tattoo",
+          "issued_organization",
+          "photo_id",
+          "user_id"
+        ],
+        "type":"object",
+        "properties" : {
+          "pet_id" : {
+            "type": "number"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "age" : {
+            "type" : "number"
+          },
+          "species" : {
+            "type" : "string"
+          },
+          "breed" : {
+            "type": "string"
+          },
+          "color" : {
+            "type": "string"
+          },
+          "date_of_birth" : {
+            "type" : "string"
+          },
+          "sex" : {
+            "type" : "string",
+            "enum" : [
+              "male",
+              "female"
+            ]
+          },
+          "tattoo" : {
+            "type": "string"
+          },
+          "issued_organization" : {
+            "type" : "string"
+          },
+          "photo_id" : {
+            "type" : "number"
+          },
+          "user_id" : {
+            "type": "number"
+          }
+        }
+      },
+      "SignUpRequest" : {
+        "required": [
+          "username",
+          "name",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "name" : {
+            "type" : "string"
+          },
+          "username" : {
+            "type": "string"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SignInRequest" : {
+        "required": [
+          "username",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "username" : {
+            "type": "string"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        }
+      },
+      "TokenResponse" : {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "token" : {
+            "type": "string"
           }
         }
       },
