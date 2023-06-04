@@ -168,18 +168,134 @@
     "/api/pets/{id}" : {
         "get" : {
           "tags": ["User"],
-          "requestBody": {
-
-          },
+          "parameters": [
+            {
+              "name" : "id"
+            }
+          ],
           "responses": {
-
+            "200": {
+              "description": "ok",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/PetsDto"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "bad request",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/BadRequestResponse"
+                  }
+                }
+              }
+            }
           }
         },
       "post" : {
         "tags": ["User"],
-          "requestBody": {
-
+        "parameters": [
+          {
+            "name" : "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PetsDto"
+                  }
+                }
+              }
+            }
           },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name" : "id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "ok" : "ok"
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/article" : {
+      "post" : {
+        "tags": ["User"],
+        "requestBody": {
+
+        },
+        "responses": {
+
+        }
+      },
+      "get" : {
+        "tags": ["User"],
+        "requestBody": {
+
+        },
+        "responses": {
+
+        }
+      }
+    },
+    "/api/article/{id}" : {
+      "post": {
+        "tags": ["User"],
+        "requestBody": {
+
+        },
+        "responses": {
+
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "requestBody": {
+
+        },
         "responses": {
 
         }
