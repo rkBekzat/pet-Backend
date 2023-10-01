@@ -33,6 +33,14 @@ type Pets interface {
 	GetAll(username string) ([]*entity.Pet, error)
 }
 
+type Article interface {
+	Create(post entity.Article) error
+	Update(post entity.Article) error
+	Delete(id int) error
+	GetById(id int) (*entity.Article, error)
+	GetAll(username string) ([]*entity.Article, error)
+}
+
 type Owner interface {
 	AddAddress(address entity.Address) (*entity.Address, error)
 	SetAddress(address entity.Address) (*entity.Address, error)

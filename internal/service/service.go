@@ -20,6 +20,14 @@ type PetAppInterface interface {
 	GetAll(username string) ([]*entity.Pet, error)
 }
 
+type ArticleAppInterface interface {
+	Create(post entity.Article, tag string) error
+	Update(post entity.Article) error
+	Delete(id int) error
+	GetById(id int) (*entity.Article, error)
+	GetAll(username string) ([]*entity.Article, error)
+}
+
 type OwnerAppInterface interface {
 	AddAddress(add entity.Address) error
 	SetAddress(add entity.Address) error

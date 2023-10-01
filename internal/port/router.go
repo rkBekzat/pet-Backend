@@ -25,11 +25,11 @@ func routing(app *service.Service, router *gin.Engine) {
 		}
 		article := api.Group("/article")
 		{
-			article.POST("/")
-			article.POST("/:id")
-			article.GET("/")
-			article.GET("/:id")
-			article.DELETE("/:id")
+			article.POST("/", handler.CreatePost(app))
+			article.POST("/:id", handler.UpdatePost(app))
+			article.GET("/", handler.GetAllPost(app))
+			article.GET("/:id", handler.GetPost(app))
+			article.DELETE("/:id", handler.DeletePost(app))
 		}
 
 		api.POST("/", handler.AddAddress(app))
