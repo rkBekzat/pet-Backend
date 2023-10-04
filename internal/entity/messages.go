@@ -4,8 +4,7 @@ type Messages struct {
 	Id           int
 	FromUserId   int
 	FromUsername string
-	ToUserId     int
-	ToUsername   string
+	RoomId       int
 	Content      string
 	CreatedAt    string
 }

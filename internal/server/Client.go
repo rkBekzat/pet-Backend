@@ -2,15 +2,17 @@ package server
 
 import (
 	"github.com/gorilla/websocket"
+	"log"
 	"pet/internal/entity"
 	"time"
 )
 
 type Client struct {
 	Conn     *websocket.Conn
-	Message  entity.Messages
+	Message  chan *entity.Messages
 	Id       int
 	Username string
+	RoomId   int
 }
 
 const (
@@ -19,17 +21,40 @@ const (
 )
 
 func (c *Client) WriteMessage() {
-	ticker := time.NewTimer(pingPeriod)
 	defer func() {
-		ticker.Stop()
 		c.Conn.Close()
 	}()
 
 	for {
-		select {}
-		//_, payload, err := c.Conn.ReadMessage()
-		//if err != nil {
-		//	return
-		//}
+		message, ok := <-c.Message
+		if !ok {
+			return
+		}
+		c.Conn.WriteJSON(message)
+	}
+}
+
+func (c *Client) ReadMessage(hub *Hub) {
+	defer func() {
+		hub.Unregister <- c
+		c.Conn.Close()
+	}()
+	for {
+		_, m, err := c.Conn.ReadMessage()
+		if err != nil {
+			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+				log.Printf("error: %v", err)
+			}
+			return
+		}
+
+		msg := &entity.Messages{
+			FromUsername: c.Username,
+			FromUserId:   c.Id,
+			CreatedAt:    time.Now().String(),
+			Content:      string(m),
+			RoomId:       c.RoomId,
+		}
+		hub.Broadcast <- msg
 	}
 }

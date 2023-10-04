@@ -169,3 +169,17 @@ CREATE TABLE Analysis(
                          FOREIGN KEY (pet_id)
                              REFERENCES Pet(pet_id)
 );
+
+CREATE TABLE Messages (
+    id SERIAL NOT NULL UNIQUE,
+    FOREIGN KEY (from_user)
+        REFERENCES users(id)
+    from_username string,
+    content TEXT,
+    date DATE,
+    room_id INT,
+)
+
+CREATE TABLE Room(
+
+)

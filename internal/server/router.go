@@ -36,4 +36,5 @@ func routing(app *service.Service, router *gin.Engine) {
 		api.POST("/update", handler.SetAddress(app))
 
 	}
+	api.GET("/socket")
 }

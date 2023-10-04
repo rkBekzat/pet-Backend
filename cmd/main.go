@@ -26,9 +26,13 @@ func main() {
 		log.Fatalf("Can't connect to DB: %s", err.Error())
 		return
 	}
+
+	hub := server.NewHub()
+	go hub.Run()
+
 	newRepository := repository.NewRepository(db)
 	newService := service.NewService(newRepository)
-	server := server.NewServer(viper.GetString("server"), newService)
+	server := server.NewServer(viper.GetString("server"), newService, hub)
 
 	err = server.Listen()
 	if err != nil {

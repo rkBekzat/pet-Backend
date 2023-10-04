@@ -10,12 +10,14 @@ type Repository struct {
 	Authorization
 	Pets
 	Owner
+	Message
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
 		Pets:          NewPetPostgres(db),
+		Message:       NewMessage(db),
 	}
 }
 
@@ -47,4 +49,9 @@ type Owner interface {
 	HasAddress(add entity.Address) bool
 	Found()
 	Lost()
+}
+
+type Message interface {
+	Save(message *entity.Messages)
+	GetMessages(roomId int) []*entity.Messages
 }

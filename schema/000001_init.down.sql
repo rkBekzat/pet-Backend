@@ -10,4 +10,6 @@ DROP TABLE Found;
 
 DROP TABLE Lost;
 
-DROP TABLE Users
+DROP TABLE Users;
+
+DROP TABLE Messages;
