@@ -5,8 +5,8 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 	"log"
-	"pet/internal/port"
 	"pet/internal/repository"
+	"pet/internal/server"
 	"pet/internal/service"
 )
 
@@ -17,7 +17,7 @@ func main() {
 	fmt.Println(viper.GetString("db.sslmode"))
 	db, err := repository.NewPostgresDB(repository.Config{
 		Host:     viper.GetString("db.host"),
-		Port:     viper.GetString("db.port"),
+		Port:     viper.GetString("db.server"),
 		Username: viper.GetString("db.username"),
 		DBName:   viper.GetString("db.dbname"),
 		SSLMode:  viper.GetString("db.sslmode"),
@@ -28,7 +28,7 @@ func main() {
 	}
 	newRepository := repository.NewRepository(db)
 	newService := service.NewService(newRepository)
-	server := port.NewServer(viper.GetString("port"), newService)
+	server := server.NewServer(viper.GetString("server"), newService)
 
 	err = server.Listen()
 	if err != nil {
