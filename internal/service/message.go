@@ -15,6 +15,14 @@ func NewMessages(repo repository.Message) *MessageService {
 	}
 }
 
+func (m *MessageService) CreateRoom() int {
+	return m.repo.CreateRoom()
+}
+
+func (m *MessageService) GetRooms(id int) []*entity.Room {
+	return m.repo.GetRooms(id)
+}
+
 func (m *MessageService) Save(message *entity.Messages) {
 	m.repo.Save(message)
 }

@@ -170,6 +170,17 @@ CREATE TABLE Analysis(
                              REFERENCES Pet(pet_id)
 );
 
+-- private message hence in each room we have 2 users
+CREATE TABLE Room(
+    id SERIAL NOT NULL UNIQUE,
+    foreign key (user1)
+        REFERENCES users(id),
+    foreign key (user2)
+         REFERENCES users(id)
+);
+
+
+
 CREATE TABLE Messages (
     id SERIAL NOT NULL UNIQUE,
     FOREIGN KEY (from_user)
@@ -177,9 +188,6 @@ CREATE TABLE Messages (
     from_username string,
     content TEXT,
     date DATE,
-    room_id INT,
-)
-
-CREATE TABLE Room(
-
-)
+    foreign key (room_id)
+        REFERENCES Room(id),
+);

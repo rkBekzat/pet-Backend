@@ -52,6 +52,8 @@ type Owner interface {
 }
 
 type Message interface {
+	CreateRoom() int
+	GetRooms(id int) []*entity.Room
 	Save(message *entity.Messages)
 	GetMessages(roomId int) []*entity.Messages
 }

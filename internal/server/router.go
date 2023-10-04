@@ -35,6 +35,9 @@ func routing(app *service.Service, router *gin.Engine) {
 		api.POST("/", handler.AddAddress(app))
 		api.POST("/update", handler.SetAddress(app))
 
+		api.POST("/createRoom/:otherUser", handler.CreateRoom(app))
+		api.GET("/getRooms", handler.GetAllRooms(app))
+		api.GET("/joinRoom/:room_id", handler.JoinRoom(app))
 	}
 	api.GET("/socket")
 }

@@ -12,4 +12,6 @@ DROP TABLE Lost;
 
 DROP TABLE Users;
 
+DROP TABLE Room;
+
 DROP TABLE Messages;

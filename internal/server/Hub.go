@@ -1,12 +1,11 @@
 package server
 
 import (
-	"github.com/google/uuid"
 	"pet/internal/entity"
 )
 
 type Room struct {
-	Id      uuid.UUID       `json:"room_id"`
+	Id      int             `json:"room_id"`
 	Name    string          `json:"room_name"`
 	Clients map[int]*Client `json:"clients"`
 }
@@ -20,7 +19,6 @@ type Hub struct {
 
 func NewRoom(name string) *Room {
 	return &Room{
-		Id:      uuid.New(),
 		Name:    name,
 		Clients: make(map[int]*Client),
 	}

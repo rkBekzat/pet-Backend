@@ -33,16 +33,25 @@ type OwnerAppInterface interface {
 	SetAddress(add entity.Address) error
 }
 
+type MessageAppInterface interface {
+	CreateRoom() int
+	GetRooms(id int) []*entity.Room
+	Save(message *entity.Messages)
+	GetMessage(roomId int) []*entity.Messages
+}
+
 type Service struct {
-	Auth  Authorization
-	Pet   PetAppInterface
-	Owner OwnerAppInterface
+	Auth    Authorization
+	Pet     PetAppInterface
+	Owner   OwnerAppInterface
+	Message MessageAppInterface
 }
 
 func NewService(repo *repository.Repository) *Service {
 	return &Service{
-		Auth:  NewAuthService(repo.Authorization),
-		Pet:   NewPetService(repo.Pets),
-		Owner: NewOwnerService(repo.Owner),
+		Auth:    NewAuthService(repo.Authorization),
+		Pet:     NewPetService(repo.Pets),
+		Owner:   NewOwnerService(repo.Owner),
+		Message: NewMessages(repo.Message),
 	}
 }
