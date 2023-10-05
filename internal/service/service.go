@@ -34,10 +34,10 @@ type OwnerAppInterface interface {
 }
 
 type MessageAppInterface interface {
-	CreateRoom() int
-	GetRooms(id int) []*entity.Room
-	Save(message *entity.Messages)
-	GetMessage(roomId int) []*entity.Messages
+	CreateRoom(user1, user2 int) (int, error)
+	GetRooms(id int) ([]*entity.Room, error)
+	Save(message *entity.Messages) error
+	GetMessage(roomId int) ([]*entity.Messages, error)
 }
 
 type Service struct {
