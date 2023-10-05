@@ -6,7 +6,7 @@ import (
 	"pet/internal/service"
 )
 
-func routing(app *service.Service, router *gin.Engine) {
+func routing(app *service.Service, router *gin.Engine, hub *Hub) {
 	auth := router.Group("/auth")
 	{
 		auth.POST("/sign-up", handler.SignUp(app))
@@ -35,9 +35,9 @@ func routing(app *service.Service, router *gin.Engine) {
 		api.POST("/", handler.AddAddress(app))
 		api.POST("/update", handler.SetAddress(app))
 
-		api.POST("/createRoom/:otherUser", handler.CreateRoom(app))
-		api.GET("/getRooms", handler.GetAllRooms(app))
-		api.GET("/joinRoom/:room_id", handler.JoinRoom(app))
+		api.POST("/createRoom/:otherUser", handler.CreateRoom(app, hub))
+		api.GET("/getRooms", handler.GetAllRooms(app, hub))
+		api.GET("/joinRoom/:room_id", handler.JoinRoom(app, hub))
 	}
 	api.GET("/socket")
 }

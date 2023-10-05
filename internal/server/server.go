@@ -14,7 +14,7 @@ type Server struct {
 func NewServer(port string, app *service.Service, hub *Hub) Server {
 	router := gin.Default()
 
-	routing(app, router)
+	routing(app, router, hub)
 
 	s := Server{
 		port: port,
