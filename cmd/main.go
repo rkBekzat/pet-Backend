@@ -5,6 +5,7 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 	"log"
+	"pet/internal/handler"
 	"pet/internal/repository"
 	"pet/internal/server"
 	"pet/internal/service"
@@ -34,6 +35,7 @@ func main() {
 	newService := service.NewService(newRepository)
 	server := server.NewServer(viper.GetString("server"), newService, hub)
 
+	handler.Routing(newService, server.App, server.Hub)
 	err = server.Listen()
 	if err != nil {
 		log.Fatalf("Server ended with this error: %s", err.Error())
